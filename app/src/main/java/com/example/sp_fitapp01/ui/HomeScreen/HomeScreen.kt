@@ -1,4 +1,4 @@
-package com.example.sp_fitapp01
+package com.example.sp_fitapp01.ui.HomeScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,25 +33,40 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.sp_fitapp01.ui.PlansScreen.PlansScreen
+import com.example.sp_fitapp01.R
+import com.example.sp_fitapp01.ui.ExercisesScreen.ExerciseListScreen
+import com.example.sp_fitapp01.ui.FinishScreen.FinishScreen
+import com.example.sp_fitapp01.ui.MainApp
+import com.example.sp_fitapp01.ui.WorkoutScreen.WorkoutScreen
+import com.example.sp_fitapp01.ui.StatScreen.StatScreen
+import com.example.sp_fitapp01.ui.navigation.NavigationDestination
 
-@Composable
-fun MainApp() {
-    val navController = rememberNavController()
-    NavHost(navController, startDestination = "main_screen") {
-        composable("main_screen") { MainScreen(navController) }
-        composable("exercise_screen") { ExerciseListScreen(navController) }
-        composable("plan_screen") { PlansScreen(navController) }
-        composable(
-            "workout_screen/{planId}",
-            arguments = listOf(navArgument("planId") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val planId = backStackEntry.arguments?.getString("planId") ?: ""
-            WorkoutScreen(navController = navController, planId = planId,
-                onWorkoutComplete = { navController.navigate("finish_screen") })
-        }
-        composable("finish_screen") { FinishScreen(navController) }
-    }
-}
+//object HomeDestination : NavigationDestination {
+//    override val route = "home"
+//    override val titleRes = R.string.app_name
+//}
+
+
+//@Composable
+//fun MainApp() {
+//    val navController = rememberNavController()
+//    NavHost(navController, startDestination = "main_screen") {
+//        composable("main_screen") { MainScreen(navController) }
+//        composable("exercise_screen") { ExerciseListScreen(navController) }
+//        composable("plan_screen") { PlansScreen(navController) }
+//        composable(
+//            "workout_screen/{planId}",
+//            arguments = listOf(navArgument("planId") { type = NavType.StringType })
+//        ) { backStackEntry ->
+//            val planId = backStackEntry.arguments?.getString("planId") ?: ""
+//            WorkoutScreen(navController = navController, planId = planId,
+//                onWorkoutComplete = { navController.navigate("finish_screen") })
+//        }
+//        composable("finish_screen") { FinishScreen(navController) }
+//        composable("stat_screen") { StatScreen(navController) }
+//    }
+//}
 
 @Composable
 fun MainScreen(navController: NavHostController) {
@@ -127,7 +142,7 @@ fun MainScreen(navController: NavHostController) {
         ) {
             FooterButton(text = "Exercises") { navController.navigate("exercise_screen") }
             //FooterButton(text = "Plans") { navController.navigate("plan_screen") }
-            FooterButton(text = "Stats")
+            FooterButton(text = "Stats") { navController.navigate("stat_screen") }
         }
     }
 }

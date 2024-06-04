@@ -1,4 +1,4 @@
-package com.example.sp_fitapp01
+package com.example.sp_fitapp01.ui.PlansScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,6 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.sp_fitapp01.R
+import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
+import com.example.sp_fitapp01.ui.ExercisesScreen.ExerciseDetailScreen
+import com.example.sp_fitapp01.ui.ExercisesScreen.ExerciseItem
 
 
 @Composable

@@ -1,7 +1,8 @@
-package com.example.sp_fitapp01
+package com.example.sp_fitapp01.ui.FinishScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,35 +13,43 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.sp_fitapp01.R
+import com.example.sp_fitapp01.ui.AppViewModelProvider
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FinishScreen(navController: NavHostController) {
-    var selectedFeel by remember { mutableStateOf(1) }
+fun FinishScreen(navController: NavHostController,
+                 viewModel: FinishScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
+                ) {
+    //val myViewModel: FinishScreenViewModel = viewModel()
+    //val selectedFeel by myViewModel.selectedFeeling.collectAsState()
     val feelings = (1..5).toList()
     val descriptions = listOf("Exhausted", "Tired", "Satisfied", "Energized", "Excellent")
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -55,17 +64,17 @@ fun FinishScreen(navController: NavHostController) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp) // Pevná výška boxu
+                    .height(100.dp)
                     .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
                     .background(Color(0xFF8EBDEF)),
-                contentAlignment = Alignment.Center // Toto zarovná obsah do stredu
+                contentAlignment = Alignment.Center
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.logo_transparent),
                     contentDescription = null,
                     modifier = Modifier
                         .size(50.dp)
-                        .scale(3f), // Zväčšenie obrázku
+                        .scale(3f),
                     contentScale = ContentScale.Fit
                 )
             }
@@ -109,11 +118,10 @@ fun FinishScreen(navController: NavHostController) {
                             modifier = Modifier
                                 .size(48.dp)
                                 .clip(CircleShape)
-                                .background(if (selectedFeel == feeling) Color.Gray else Color.LightGray)
-                                .selectable(
-                                    selected = (selectedFeel == feeling),
-                                    onClick = { selectedFeel = feeling }
-                                )
+                               // .background(if (viewModel.getSelectedFeel() == feeling) Color.Gray else Color.LightGray)
+                                .clickable {
+                                //    viewModel.setSelectedFeel(feeling, descriptions[index])
+                                }
                                 .padding(8.dp),
                             contentAlignment = Alignment.Center
                         ) {
@@ -125,7 +133,12 @@ fun FinishScreen(navController: NavHostController) {
         }
 
         Button(
-            onClick = { navController.navigate("main_screen") },
+            onClick = {
+                coroutineScope.launch {
+                    //saveToDB(applicationContext = context, feel = selectedFeel)
+                }
+                navController.navigate("main_screen")
+            },
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
@@ -135,6 +148,15 @@ fun FinishScreen(navController: NavHostController) {
         }
     }
 }
+
+//private suspend fun saveToDB(applicationContext: Context, feel: Int) {
+//    val db = Room.databaseBuilder(
+//        applicationContext,
+//        FeelingRoomDatabase::class.java, "database-name"
+//    ).build()
+//    val feelingDao = db.dao()
+//    feelingDao.insert(Feeling(id = 0, name = "yo", value = feel))
+//}
 
 @Preview
 @Composable

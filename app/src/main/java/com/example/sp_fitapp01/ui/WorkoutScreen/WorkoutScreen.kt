@@ -1,4 +1,4 @@
-package com.example.sp_fitapp01
+package com.example.sp_fitapp01.ui.WorkoutScreen
 
 import android.content.Context
 import android.media.MediaPlayer
@@ -43,6 +43,8 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.GifDecoder
 import coil.request.ImageRequest
 import coil.size.Size
+import com.example.sp_fitapp01.R
+import com.example.sp_fitapp01.ui.PlansScreen.dummyPlans
 
 @Composable
 fun WorkoutScreen(navController: NavHostController, planId: String, onWorkoutComplete: () -> Unit) {

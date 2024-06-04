@@ -1,4 +1,4 @@
-package com.example.sp_fitapp01
+package com.example.sp_fitapp01.ui.ExercisesScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +33,8 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import coil.decode.*
+import com.example.sp_fitapp01.R
+import com.example.sp_fitapp01.ui.navigation.NavigationDestination
 
 var defExercises = listOf(
 Exercise(R.drawable.push_up, R.raw.push_up, "Push up", "A push-up is a common strength training exercise..."),
@@ -42,6 +44,11 @@ Exercise(R.drawable.dip, R.raw.dip, "Dip", "A dip is an upper-body strength exer
 Exercise(R.drawable.jumping_jack, R.raw.jumping_jack, "Jumping jack", "A jumping jack, also known as a star jump..."),
 Exercise(R.drawable.stretch, R.raw.stretch, "Stretch", "Stretching is a form of physical exercise...")
 )
+
+object HomeDestination : NavigationDestination {
+    override val route = "exercises"
+    override val titleRes = R.string.app_name
+}
 
 @Composable
 fun ExerciseListScreen(navController: NavHostController, exercises: List<Exercise> = defExercises) {
