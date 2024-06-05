@@ -1,16 +1,11 @@
 package com.example.sp_fitapp01.ui
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.sp_fitapp01.FitnessApplication
 import com.example.sp_fitapp01.ui.FinishScreen.FinishScreenViewModel
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import com.example.sp_fitapp01.ui.WorkoutScreen.WorkoutViewModel
 
 
 object AppViewModelProvider {
@@ -21,13 +16,13 @@ object AppViewModelProvider {
     }
 }
 
-class TempWorkoutViewModelFactory(private val onFinish: () -> Unit) : ViewModelProvider.Factory {
-    val BigFactory = viewModelFactory {
-//        initializer {
-            //WorkoutViewModel(onFinish = onFinish)
-//        }
-    }
-}
+//class TempWorkoutViewModelFactory(private val onFinish: () -> Unit) : ViewModelProvider.Factory {
+//    val BigFactory = viewModelFactory {
+////        initializer {
+//            //WorkoutViewModel(onFinish = onFinish)
+////        }
+//    }
+//}
 
 //class WorkoutViewModelFactory(private val onFinish: () -> Unit) : ViewModelProvider.Factory {
 //    override fun <T : ViewModel> create(modelClass: Class<T>): T {

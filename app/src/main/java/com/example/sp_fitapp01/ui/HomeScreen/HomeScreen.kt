@@ -38,19 +38,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.example.sp_fitapp01.ui.PlansScreen.PlansScreen
 import com.example.sp_fitapp01.R
-import com.example.sp_fitapp01.ui.ExercisesScreen.ExerciseListScreen
-import com.example.sp_fitapp01.ui.FinishScreen.FinishScreen
 import com.example.sp_fitapp01.ui.MainApp
-import com.example.sp_fitapp01.ui.WorkoutScreen.WorkoutScreen
-import com.example.sp_fitapp01.ui.StatScreen.StatScreen
-import com.example.sp_fitapp01.ui.navigation.NavigationDestination
 
 //object HomeDestination : NavigationDestination {
 //    override val route = "home"

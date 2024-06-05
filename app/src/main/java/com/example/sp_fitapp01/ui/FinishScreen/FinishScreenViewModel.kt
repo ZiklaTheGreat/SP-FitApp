@@ -20,17 +20,9 @@ class FinishScreenViewModel(private val feelingRepository: FeelingRepository) : 
         _selectedFeeling.value = FeelingDetails(name = pName, id = feel)
     }
 
-    fun getSelectedFeel(): Int {
-        return selectedFeeling.value.id
-    }
-
     suspend fun saveFeeling() {
         feelingRepository.insertFeeling(selectedFeeling.value.toFeeling())
     }
-}
-
-fun StateFlow<FeelingDetails>.toFeelingDetails(): FeelingDetails {
-    return FeelingDetails(name = this.value.name, id = this.value.id)
 }
 
 fun FeelingDetails.toFeeling(): Feeling {

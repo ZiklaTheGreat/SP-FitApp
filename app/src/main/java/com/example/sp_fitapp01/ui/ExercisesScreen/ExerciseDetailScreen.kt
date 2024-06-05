@@ -31,7 +31,7 @@ import coil.decode.*
 @Composable
 fun ExerciseDetailScreen(exerciseName: String, onBack: () -> Unit) {
     val context = LocalContext.current
-    val exercise = defExercises().firstOrNull() { it.name == exerciseName }
+    val exercise = defExercises().firstOrNull { it.name == exerciseName }
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
             .data(exercise?.gifResourceId)
