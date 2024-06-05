@@ -13,9 +13,7 @@ class FitnessApplication : Application() {
     lateinit var container: AppContainer
 
     override fun onCreate() {
-        println("Debug message 2")
         super.onCreate()
-        println("Debug message 3")
         container = AppDataContainer(this)
     }
 }

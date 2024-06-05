@@ -19,6 +19,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,17 +41,16 @@ import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.AppViewModelProvider
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FinishScreen(navController: NavHostController,
-                 viewModel: FinishScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
-                ) {
-    //val myViewModel: FinishScreenViewModel = viewModel()
-    //val selectedFeel by myViewModel.selectedFeeling.collectAsState()
+fun FinishScreen(
+    navController: NavHostController,
+    viewModel: FinishScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
+) {
     val feelings = (1..5).toList()
     val descriptions = listOf("Exhausted", "Tired", "Satisfied", "Energized", "Excellent")
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
+    val selectedFeel by viewModel.selectedFeeling.collectAsState()
 
     Column(
         modifier = Modifier
@@ -58,9 +59,7 @@ fun FinishScreen(navController: NavHostController,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -105,9 +104,7 @@ fun FinishScreen(navController: NavHostController,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 feelings.forEachIndexed { index, feeling ->
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = descriptions[index],
                             fontSize = 10.sp,
@@ -118,9 +115,9 @@ fun FinishScreen(navController: NavHostController,
                             modifier = Modifier
                                 .size(48.dp)
                                 .clip(CircleShape)
-                               // .background(if (viewModel.getSelectedFeel() == feeling) Color.Gray else Color.LightGray)
+                                .background(if (selectedFeel.id == feeling) Color.Gray else Color.LightGray)
                                 .clickable {
-                                //    viewModel.setSelectedFeel(feeling, descriptions[index])
+                                    viewModel.setSelectedFeel(feeling, descriptions[index])
                                 }
                                 .padding(8.dp),
                             contentAlignment = Alignment.Center
@@ -135,9 +132,9 @@ fun FinishScreen(navController: NavHostController,
         Button(
             onClick = {
                 coroutineScope.launch {
-                    //saveToDB(applicationContext = context, feel = selectedFeel)
+                    viewModel.saveFeeling()
+                    navController.navigate("main_screen")
                 }
-                navController.navigate("main_screen")
             },
             modifier = Modifier
                 .padding(16.dp)
@@ -148,6 +145,7 @@ fun FinishScreen(navController: NavHostController,
         }
     }
 }
+
 
 //private suspend fun saveToDB(applicationContext: Context, feel: Int) {
 //    val db = Room.databaseBuilder(
