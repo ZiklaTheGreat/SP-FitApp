@@ -12,7 +12,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             SPFitApp01Theme {
                 MainApp()
-                //ExerciseListScreen()
             }
         }
     }

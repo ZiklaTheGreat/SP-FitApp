@@ -2,6 +2,7 @@ package com.example.sp_fitapp01.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -46,6 +47,8 @@ fun FitAppNavigation(
                 planName = planId
             )
         }
+        composable("finish_screen") { FinishScreen(navController) }
+        composable("stat_screen") { StatScreen(navController) }
         composable(
             "workout_screen/{planId}",
             arguments = listOf(navArgument("planId") { type = NavType.StringType })
@@ -56,7 +59,6 @@ fun FitAppNavigation(
                 planId = planId,
                 onWorkoutComplete = { navController.navigate("finish_screen") })
         }
-        composable("finish_screen") { FinishScreen(navController) }
-        composable("stat_screen") { StatScreen(navController) }
     }
 }
+
