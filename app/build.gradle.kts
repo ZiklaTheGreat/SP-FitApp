@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.sp_fitapp01"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -73,7 +73,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("io.coil-kt:coil-gif:2.1.0")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
-    //implementation("co.yml:ycharts:2.1.0")
+    implementation("co.yml:ycharts:2.1.0")
     //implementation("androidx.room:room-runtime:2.6.1")
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
     implementation("androidx.activity:activity-compose:1.9.0")

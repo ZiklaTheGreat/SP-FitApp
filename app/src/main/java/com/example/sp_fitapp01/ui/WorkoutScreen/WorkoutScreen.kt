@@ -15,8 +15,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -44,6 +47,9 @@ import coil.decode.GifDecoder
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.sp_fitapp01.R
+import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
+import com.example.sp_fitapp01.ui.FinishScreen.FinishBody
+import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
 import com.example.sp_fitapp01.ui.PlansScreen.dummyPlans
 
 @Composable
@@ -97,79 +103,133 @@ fun WorkoutScreen(navController: NavHostController, planId: String, onWorkoutCom
         playSound(soundContext, R.raw.notification)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        Box(
+    Scaffold(
+        topBar = { TopBarIcon() }
+    ) { innerPadding ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp) // Fixed height of the box
-                .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
-                .background(Color(0xFF8EBDEF)),
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .background(Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo_transparent),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(50.dp)
-                    .scale(3f),
-                contentScale = ContentScale.Fit
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = if (isResting) "Rest" else exercise.name,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        val context = LocalContext.current
-        val painter = rememberAsyncImagePainter(
-            model = if (!isResting) ImageRequest.Builder(context)
-                .data(exercise.gifResourceId)
-                .decoderFactory(GifDecoder.Factory())
-                .size(Size.ORIGINAL)
-                .build()
-            else ImageRequest.Builder(context)
-                .data(R.raw.rest1)
-                .decoderFactory(GifDecoder.Factory())
-                .size(Size.ORIGINAL)
-                .build()
-        )
-        Image(
-            painter = painter,
-            contentDescription = exercise.name,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-                .clip(RoundedCornerShape(8.dp))
-                .padding(horizontal = 16.dp),
-            contentScale = ContentScale.Fit
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = String.format("%02d:%02d", timeLeft / 60, timeLeft % 60),
-            fontSize = 48.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = {
+            WorkoutBody(isResting = isResting, exercise = exercise, timeLeft = timeLeft, switchToNextPhase = {
                 timeLeft = 0
                 switchToNextPhase()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(text = "Skip")
+            })
         }
+    }
+
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .background(Color.White),
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//        verticalArrangement = Arrangement.Top
+//    ) {
+//
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Text(
+//            text = if (isResting) "Rest" else exercise.name,
+//            fontSize = 24.sp,
+//            fontWeight = FontWeight.Bold,
+//            color = Color.Black
+//        )
+//        Spacer(modifier = Modifier.height(16.dp))
+//        val context = LocalContext.current
+//        val painter = rememberAsyncImagePainter(
+//            model = if (!isResting) ImageRequest.Builder(context)
+//                .data(exercise.gifResourceId)
+//                .decoderFactory(GifDecoder.Factory())
+//                .size(Size.ORIGINAL)
+//                .build()
+//            else ImageRequest.Builder(context)
+//                .data(R.raw.rest1)
+//                .decoderFactory(GifDecoder.Factory())
+//                .size(Size.ORIGINAL)
+//                .build()
+//        )
+//        Image(
+//            painter = painter,
+//            contentDescription = exercise.name,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .aspectRatio(1f)
+//                .clip(RoundedCornerShape(8.dp))
+//                .padding(horizontal = 16.dp),
+//            contentScale = ContentScale.Fit
+//        )
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Text(
+//            text = String.format("%02d:%02d", timeLeft / 60, timeLeft % 60),
+//            fontSize = 48.sp,
+//            fontWeight = FontWeight.Bold,
+//            color = Color.Black
+//        )
+//        Spacer(modifier = Modifier.height(16.dp))
+//        Button(
+//            onClick = {
+//                timeLeft = 0
+//                switchToNextPhase()
+//            },
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Text(text = "Skip")
+//        }
+//    }
+}
+
+@Composable
+fun WorkoutBody(isResting: Boolean, exercise: Exercise, switchToNextPhase: () -> Unit, timeLeft: Int) {
+
+    Spacer(modifier = Modifier.height(16.dp))
+    Text(
+        text = if (isResting) "Rest" else exercise.name,
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Black
+    )
+    Spacer(modifier = Modifier.height(16.dp))
+    val context = LocalContext.current
+    val painter = rememberAsyncImagePainter(
+        model = if (!isResting) ImageRequest.Builder(context)
+            .data(exercise.gifResourceId)
+            .decoderFactory(GifDecoder.Factory())
+            .size(Size.ORIGINAL)
+            .build()
+        else ImageRequest.Builder(context)
+            .data(R.raw.rest1)
+            .decoderFactory(GifDecoder.Factory())
+            .size(Size.ORIGINAL)
+            .build()
+    )
+    Image(
+        painter = painter,
+        contentDescription = exercise.name,
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+            .clip(RoundedCornerShape(8.dp))
+            .padding(horizontal = 16.dp),
+        contentScale = ContentScale.Fit
+    )
+    Spacer(modifier = Modifier.height(16.dp))
+    Text(
+        text = String.format("%02d:%02d", timeLeft / 60, timeLeft % 60),
+        fontSize = 48.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Black
+    )
+    Spacer(modifier = Modifier.height(16.dp))
+    Button(
+        onClick = {
+            switchToNextPhase()
+        },
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(text = "Skip")
     }
 }
 

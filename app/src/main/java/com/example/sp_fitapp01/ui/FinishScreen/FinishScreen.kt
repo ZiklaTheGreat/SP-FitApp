@@ -13,10 +13,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -39,6 +43,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.AppViewModelProvider
+import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
 import kotlinx.coroutines.launch
 
 @Composable
@@ -46,115 +51,102 @@ fun FinishScreen(
     navController: NavHostController,
     viewModel: FinishScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    Scaffold(
+        topBar = { TopBarIcon() }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .background(Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            FinishBody(navController = navController, viewModel = viewModel)
+        }
+    }
+}
+
+@Composable
+fun FinishBody(navController: NavHostController, viewModel: FinishScreenViewModel) {
     val feelings = (1..5).toList()
     val descriptions = listOf("Exhausted", "Tired", "Satisfied", "Energized", "Excellent")
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val selectedFeel by viewModel.selectedFeeling.collectAsState()
-
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-                    .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
-                    .background(Color(0xFF8EBDEF)),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo_transparent),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(50.dp)
-                        .scale(3f),
-                    contentScale = ContentScale.Fit
-                )
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = "Done!",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = "Great Job",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = "How do you feel?",
-                fontSize = 18.sp,
-                color = Color.Black
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                feelings.forEachIndexed { index, feeling ->
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = descriptions[index],
-                            fontSize = 10.sp,
-                            color = Color.Black,
-                            modifier = Modifier.padding(8.dp)
-                        )
-                        Box(
-                            modifier = Modifier
-                                .size(48.dp)
-                                .clip(CircleShape)
-                                .background(if (selectedFeel.id == feeling) Color.Gray else Color.LightGray)
-                                .clickable {
-                                    viewModel.setSelectedFeel(feeling, descriptions[index])
-                                }
-                                .padding(8.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(text = feeling.toString())
-                        }
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            text = "Done!",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            text = "Great Job",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            text = "How do you feel?",
+            fontSize = 18.sp,
+            color = Color.Black
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            feelings.forEachIndexed { index, feeling ->
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = descriptions[index],
+                        fontSize = 10.sp,
+                        color = Color.Black,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(CircleShape)
+                            .background(if (selectedFeel.id == feeling) Color.Gray else Color.LightGray)
+                            .clickable {
+                                viewModel.setSelectedFeel(feeling, descriptions[index])
+                            }
+                            .padding(8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = feeling.toString())
                     }
                 }
             }
         }
+    }
 
-        Button(
-            onClick = {
-                coroutineScope.launch {
-                    viewModel.saveFeeling()
-                    navController.navigate("main_screen")
-                }
-            },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .height(48.dp)
-        ) {
-            Text(text = "Finish", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-        }
+    Button(
+        onClick = {
+            coroutineScope.launch {
+                viewModel.saveFeeling()
+                navController.navigate("main_screen")
+            }
+        },
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .height(48.dp)
+    ) {
+        Text(text = "Finish", fontSize = 18.sp, fontWeight = FontWeight.Bold)
     }
 }
 
-
-//private suspend fun saveToDB(applicationContext: Context, feel: Int) {
-//    val db = Room.databaseBuilder(
-//        applicationContext,
-//        FeelingRoomDatabase::class.java, "database-name"
-//    ).build()
-//    val feelingDao = db.dao()
-//    feelingDao.insert(Feeling(id = 0, name = "yo", value = feel))
-//}
 
 @Preview
 @Composable

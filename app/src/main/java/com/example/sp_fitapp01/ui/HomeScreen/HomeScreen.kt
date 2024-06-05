@@ -1,7 +1,9 @@
 package com.example.sp_fitapp01.ui.HomeScreen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,17 +15,25 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,59 +78,93 @@ import com.example.sp_fitapp01.ui.navigation.NavigationDestination
 //    }
 //}
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(navController: NavHostController) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        // Header Section
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
-                .background(Color(0xFF8EBDEF))
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "FitApp",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-                Text(
-                    text = "your fitness journey, today",
-                    fontSize = 16.sp,
-                    color = Color.Black
-                )
-                Text(
-                    text = "MENU",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-            }
+    Scaffold(
+        topBar = {
+            TopBarMain(name = "FitApp", motto = "your fitness journey, today", desc = "MENU")
         }
+    ) { innerPadding ->
+        // Use Scrollable Column to enable scrolling
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)  // This will apply the Scaffold's padding
+                .verticalScroll(rememberScrollState()) // Enables scrolling
+                .padding(horizontal = 16.dp),  // Add any additional padding you need
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(32.dp))
+            MainLogo()
+            MainButtons(navController = navController)
+        }
+    }
+}
 
-        // Logo
-        Spacer(modifier = Modifier.height(32.dp))
+@Composable
+fun FooterButton(text: String, onClick: () -> Unit = {}) {
+    Button(
+        onClick = onClick,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
+            .padding(8.dp)
+            .width(110.dp)
+    ) {
+        Text(text = text)
+    }
+}
+
+@Composable
+fun TopBarMain(name: String, motto:String, desc: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
+            .background(Color(0xFF8EBDEF))
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = name,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Text(
+                text = motto,
+                fontSize = 16.sp,
+                color = Color.Black,
+                textDecoration = TextDecoration.Underline
+            )
+            Text(
+                text = desc,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+        }
+    }
+}
+
+@Composable
+fun MainLogo() {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.logo_transparent),
             contentDescription = null,
             modifier = Modifier
                 .size(400.dp)
                 .padding(16.dp),
             contentScale = ContentScale.Fit
         )
+}
 
-        // Workout Button
+@Composable
+fun MainButtons(navController: NavHostController) {
+            // Workout Button
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = { navController.navigate("plan_screen") },
@@ -144,21 +188,62 @@ fun MainScreen(navController: NavHostController) {
             //FooterButton(text = "Plans") { navController.navigate("plan_screen") }
             FooterButton(text = "Stats") { navController.navigate("stat_screen") }
         }
+}
+
+@Composable
+fun TopBarName(navController: NavHostController, name: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
+            .background(Color(0xFF8EBDEF))
+            .padding(24.dp)
+    ) {
+        // Header Section
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back",
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable { navController.popBackStack() }
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = name,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Spacer(modifier = Modifier.weight(1f))
+        }
     }
 }
 
 @Composable
-fun FooterButton(text: String, onClick: () -> Unit = {}) {
-    Button(
-        onClick = onClick,
-        shape = RoundedCornerShape(8.dp),
+fun TopBarIcon() {
+    Box(
         modifier = Modifier
-            .padding(8.dp)
-            .width(110.dp)
+            .fillMaxWidth()
+            .height(100.dp)
+            .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
+            .background(Color(0xFF8EBDEF)),
+        contentAlignment = Alignment.Center
     ) {
-        Text(text = text)
+        Image(
+            painter = painterResource(id = R.drawable.logo_transparent),
+            contentDescription = null,
+            modifier = Modifier
+                .size(50.dp)
+                .scale(3f),
+            contentScale = ContentScale.Fit
+        )
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
