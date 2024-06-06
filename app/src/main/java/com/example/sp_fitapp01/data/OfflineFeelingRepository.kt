@@ -8,4 +8,6 @@ class OfflineFeelingRepository(private val feelingDao: FeelingDao) : FeelingRepo
     override suspend fun deleteFeeling(feeling: Feeling) = feelingDao.deleteFeeling(feeling)
     override fun getFeeling(value: Int): Flow<Feeling> = feelingDao.getFeeling(value)
     override fun getAllFeelings(): Flow<List<Feeling>> = feelingDao.getAllFeelings()
+    override fun getFeelingByValue(value: Int): Flow<List<Feeling>> = feelingDao.getFeelingsByValue(value)
+    override fun getTotalWorkouts(): Flow<Int> = feelingDao.getTotalWorkouts()
 }

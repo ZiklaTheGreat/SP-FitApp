@@ -24,4 +24,10 @@ interface FeelingDao {
 
     @Query("SELECT * from feelings ORDER BY name ASC")
     fun getAllFeelings(): Flow<List<Feeling>>
+
+    @Query("SELECT * from feelings WHERE value = :value")
+    fun getFeelingsByValue(value: Int): Flow<List<Feeling>>
+
+    @Query("SELECT COUNT(*) FROM feelings")
+    fun getTotalWorkouts(): Flow<Int>
 }

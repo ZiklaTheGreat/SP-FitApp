@@ -8,5 +8,6 @@ interface FeelingRepository {
     suspend fun updateFeeling(feeling: Feeling)
     fun getFeeling(value: Int): Flow<Feeling>
     fun getAllFeelings(): Flow<List<Feeling>>
-
+    fun getFeelingByValue(value: Int): Flow<List<Feeling>>
+    fun getTotalWorkouts(): Flow<Int>
 }

@@ -31,7 +31,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
@@ -40,8 +43,11 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
+import com.example.sp_fitapp01.ui.FinishScreen.FinishScreenViewModel
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
 import com.example.sp_fitapp01.ui.PlansScreen.dummyPlans
+import com.example.sp_fitapp01.ui.StatScreen.StatViewModel
+import com.example.sp_fitapp01.ui.fitnessApplication
 
 
 @Composable
@@ -52,9 +58,15 @@ fun WorkoutScreen(
 ) {
 //    val workoutViewModel: WorkoutViewModel = viewModel(
 //        factory = TempWorkoutViewModelFactory(onFinish = onWorkoutComplete).BigFactory)
-    val workoutViewModel: WorkoutViewModel = viewModel()
-    val plan = dummyPlans().firstOrNull { it.name == planId }
+    //val workoutViewModel: WorkoutViewModel = viewModel()
     val context = LocalContext.current
+    val workoutViewModel: WorkoutViewModel = viewModel(factory = viewModelFactory {
+        initializer {
+            WorkoutViewModel(context)
+        }
+    })
+    val plan = dummyPlans().firstOrNull { it.name == planId }
+    //val context = LocalContext.current
 
     if (plan == null) {
         navController.popBackStack()
@@ -67,10 +79,6 @@ fun WorkoutScreen(
     val isResting by workoutViewModel.isResting
     val isOver by workoutViewModel.isOver
 
-//    LaunchedEffect(isOver) {
-//        onWorkoutComplete()
-//    }
-
     if (isOver) {
         onWorkoutComplete()
     }
@@ -79,9 +87,9 @@ fun WorkoutScreen(
         workoutViewModel.setPlan(plan)
     }
 
-    LaunchedEffect(isResting) {
-        playSound(context, R.raw.notification)
-    }
+//    LaunchedEffect(isResting) {
+//        playSound(context, R.raw.notification)
+//    }
 
     Scaffold(
         topBar = { TopBarIcon() }
@@ -158,10 +166,10 @@ fun WorkoutBody(isResting: Boolean, exercise: Exercise, switchToNextPhase: () ->
     }
 }
 
-private fun playSound(context: Context, soundResourceId: Int) {
-    val mediaPlayer = MediaPlayer.create(context, soundResourceId)
-    mediaPlayer.start()
-}
+//private fun playSound(context: Context, soundResourceId: Int) {
+//    val mediaPlayer = MediaPlayer.create(context, soundResourceId)
+//    mediaPlayer.start()
+//}
 
 @Preview
 @Composable

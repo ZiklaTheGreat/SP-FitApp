@@ -1,9 +1,13 @@
 package com.example.sp_fitapp01.ui.WorkoutScreen
 
+import android.content.Context
+import android.media.MediaPlayer
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.PlansScreen.Plan
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -11,7 +15,7 @@ import kotlinx.coroutines.launch
 
 
 //class WorkoutViewModel(onFinish: () -> Unit) : ViewModel() {
-class WorkoutViewModel : ViewModel() {
+class WorkoutViewModel(private val context: Context) : ViewModel() {
 
     private val _currentExerciseIndex = mutableStateOf(0)
     val currentExerciseIndex: State<Int> = _currentExerciseIndex
@@ -28,12 +32,6 @@ class WorkoutViewModel : ViewModel() {
     private var plan: Plan? = null
     private var timerJob: Job? = null
 
-//    private val onFinish: () -> Unit
-//
-//    init {
-//        this.onFinish = onFinish
-//    }
-
     fun setPlan(newPlan: Plan) {
         plan = newPlan
         startTimer()
@@ -44,6 +42,7 @@ class WorkoutViewModel : ViewModel() {
 
         if (_currentExerciseIndex.value == plan!!.exercises.size - 1 && !_isResting.value) {
             //onFinish()
+            playSound(R.raw.finish)
             _isOver.value = true
         } else {
             if (_isResting.value) {
@@ -59,6 +58,7 @@ class WorkoutViewModel : ViewModel() {
     }
 
     private fun startTimer() {
+        playSound(R.raw.notification)
         timerJob?.cancel()
         timerJob = viewModelScope.launch {
             while (_timeLeft.value > 0) {
@@ -78,6 +78,11 @@ class WorkoutViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         timerJob?.cancel()
+    }
+
+    private fun playSound(soundId: Int) {
+        val mediaPlayer = MediaPlayer.create(context, soundId)
+        mediaPlayer.start()
     }
 }
 

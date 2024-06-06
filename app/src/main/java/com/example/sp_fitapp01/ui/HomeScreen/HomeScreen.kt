@@ -200,7 +200,7 @@ fun TopBarName(navController: NavHostController, name: String) {
                     .size(24.dp)
                     .clickable { navController.popBackStack() }
             )
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(0.8f))
             Text(
                 text = name,
                 fontSize = 24.sp,
