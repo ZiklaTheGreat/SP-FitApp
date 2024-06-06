@@ -46,19 +46,21 @@ import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
 import com.example.sp_fitapp01.ui.FinishScreen.FinishScreenViewModel
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
 import com.example.sp_fitapp01.ui.PlansScreen.dummyPlans
-import com.example.sp_fitapp01.ui.StatScreen.StatViewModel
-import com.example.sp_fitapp01.ui.fitnessApplication
 
 
+/**
+ * Composable function for the workout screen, displaying exercises and rest periods.
+ *
+ * @param navController Navigation controller for managing navigation within the app.
+ * @param planId Identifier for the workout plan.
+ * @param onWorkoutComplete Callback function invoked when the workout is completed.
+ */
 @Composable
 fun WorkoutScreen(
     navController: NavHostController,
     planId: String,
     onWorkoutComplete: () -> Unit,
 ) {
-//    val workoutViewModel: WorkoutViewModel = viewModel(
-//        factory = TempWorkoutViewModelFactory(onFinish = onWorkoutComplete).BigFactory)
-    //val workoutViewModel: WorkoutViewModel = viewModel()
     val context = LocalContext.current
     val workoutViewModel: WorkoutViewModel = viewModel(factory = viewModelFactory {
         initializer {
@@ -66,13 +68,11 @@ fun WorkoutScreen(
         }
     })
     val plan = dummyPlans().firstOrNull { it.name == planId }
-    //val context = LocalContext.current
 
     if (plan == null) {
         navController.popBackStack()
         return
     }
-
 
     val currentExerciseIndex by workoutViewModel.currentExerciseIndex
     val timeLeft by workoutViewModel.timeLeft
@@ -86,10 +86,6 @@ fun WorkoutScreen(
     LaunchedEffect(planId) {
         workoutViewModel.setPlan(plan)
     }
-
-//    LaunchedEffect(isResting) {
-//        playSound(context, R.raw.notification)
-//    }
 
     Scaffold(
         topBar = { TopBarIcon() }
@@ -115,6 +111,14 @@ fun WorkoutScreen(
     }
 }
 
+/**
+ * Composable function for the main body of the workout screen, displaying exercise details.
+ *
+ * @param isResting Indicates whether the current phase is a rest period.
+ * @param exercise Details of the current exercise.
+ * @param switchToNextPhase Callback function to switch to the next phase (exercise or rest).
+ * @param timeLeft Remaining time for the current exercise or rest period.
+ */
 @Composable
 fun WorkoutBody(isResting: Boolean, exercise: Exercise, switchToNextPhase: () -> Unit, timeLeft: Int) {
     Spacer(modifier = Modifier.height(16.dp))
@@ -166,11 +170,9 @@ fun WorkoutBody(isResting: Boolean, exercise: Exercise, switchToNextPhase: () ->
     }
 }
 
-//private fun playSound(context: Context, soundResourceId: Int) {
-//    val mediaPlayer = MediaPlayer.create(context, soundResourceId)
-//    mediaPlayer.start()
-//}
-
+/**
+ * Preview composable function for displaying the workout screen.
+ */
 @Preview
 @Composable
 fun WorkoutScreenPreview() {

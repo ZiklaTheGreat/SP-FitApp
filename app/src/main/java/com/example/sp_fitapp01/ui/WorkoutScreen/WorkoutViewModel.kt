@@ -13,8 +13,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
-//class WorkoutViewModel(onFinish: () -> Unit) : ViewModel() {
+/**
+ * ViewModel for managing workout data and logic.
+ *
+ * @param context Application context for accessing resources.
+ */
 class WorkoutViewModel(private val context: Context) : ViewModel() {
 
     private val _currentExerciseIndex = mutableStateOf(0)
@@ -32,16 +35,23 @@ class WorkoutViewModel(private val context: Context) : ViewModel() {
     private var plan: Plan? = null
     private var timerJob: Job? = null
 
+    /**
+     * Sets the workout plan and starts the timer.
+     *
+     * @param newPlan The new workout plan to be set.
+     */
     fun setPlan(newPlan: Plan) {
         plan = newPlan
         startTimer()
     }
 
+    /**
+     * Switches to the next phase of the workout (exercise or rest period).
+     */
     private fun switchToNextPhase() {
         if (plan == null) return
 
         if (_currentExerciseIndex.value == plan!!.exercises.size - 1 && !_isResting.value) {
-            //onFinish()
             playSound(R.raw.finish)
             _isOver.value = true
         } else {
@@ -57,6 +67,9 @@ class WorkoutViewModel(private val context: Context) : ViewModel() {
         }
     }
 
+    /**
+     * Starts the timer for the current exercise or rest period.
+     */
     private fun startTimer() {
         playSound(R.raw.notification)
         timerJob?.cancel()
@@ -69,17 +82,20 @@ class WorkoutViewModel(private val context: Context) : ViewModel() {
         }
     }
 
+    /**
+     * Skips the current phase of the workout.
+     */
     fun skip() {
         timerJob?.cancel()
         _timeLeft.value = 0
         switchToNextPhase()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        timerJob?.cancel()
-    }
-
+    /**
+     * Plays a sound for a given resource ID.
+     *
+     * @param soundId The resource ID of the sound to be played.
+     */
     private fun playSound(soundId: Int) {
         val mediaPlayer = MediaPlayer.create(context, soundId)
         mediaPlayer.start()

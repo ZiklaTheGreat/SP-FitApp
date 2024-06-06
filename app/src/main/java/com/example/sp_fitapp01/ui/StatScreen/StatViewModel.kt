@@ -14,6 +14,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for statistics, containing data about feelings and workout count.
+ *
+ * @param feelingRepository Repository for manipulating feelings data.
+ */
 class StatViewModel(private val feelingRepository: FeelingRepository) : ViewModel() {
     private val _feelings = MutableStateFlow(emptyList<Float>())
     val feelings: StateFlow<List<Float>> = _feelings.asStateFlow()
@@ -26,12 +31,12 @@ class StatViewModel(private val feelingRepository: FeelingRepository) : ViewMode
             val feelingCounts = (1..5).map { value ->
                 feelingRepository.getFeelingByValue(value)
                     .map { feelings -> feelings.size.toFloat() }
-                    .first() // Collect the first emission
+                    .first()
             }
             _feelings.value = feelingCounts
 
             _totalWorkouts.value = feelingRepository.getTotalWorkouts()
-                .first() // Collect the first emission
+                .first()
         }
     }
 }

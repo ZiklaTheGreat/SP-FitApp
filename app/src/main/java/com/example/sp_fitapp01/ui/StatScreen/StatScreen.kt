@@ -42,6 +42,12 @@ import com.example.sp_fitapp01.ui.FinishScreen.FinishScreenViewModel
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
+/**
+ * Composable function for displaying statistics screen.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ * @param viewModel The view model responsible for providing data for statistics.
+ */
 @Composable
 fun StatScreen(
     navController: NavHostController,
@@ -75,6 +81,15 @@ fun StatScreen(
         }
     }
 }
+/**
+ * Composable function for displaying a pie chart.
+ *
+ * @param s1 The value of the first slice in the pie chart.
+ * @param s2 The value of the second slice in the pie chart.
+ * @param s3 The value of the third slice in the pie chart.
+ * @param s4 The value of the fourth slice in the pie chart.
+ * @param s5 The value of the fifth slice in the pie chart.
+ */
 @Composable
 fun PieChart(s1: Float = 0f, s2: Float = 0f, s3: Float = 0f, s4: Float = 0f, s5: Float = 0f) {
     val donutChartData = PieChartData(
@@ -133,6 +148,11 @@ fun PieChart(s1: Float = 0f, s2: Float = 0f, s3: Float = 0f, s4: Float = 0f, s5:
     }
 }
 
+/**
+ * Composable function for displaying total workouts.
+ *
+ * @param viewModel The view model responsible for providing data for total workouts.
+ */
 @Composable
 fun TotalWorkouts(viewModel: StatViewModel) {
     val totalWorkouts by viewModel.totalWorkouts.collectAsState()
@@ -160,6 +180,9 @@ fun TotalWorkouts(viewModel: StatViewModel) {
 }
 
 
+/**
+ * Composable function for displaying statistics screen preview.
+ */
 @Preview
 @Composable
 fun StatScreenPreview() {

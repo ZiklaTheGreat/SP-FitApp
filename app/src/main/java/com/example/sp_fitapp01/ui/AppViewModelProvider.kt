@@ -13,6 +13,10 @@ import com.example.sp_fitapp01.ui.StatScreen.StatViewModel
 import com.example.sp_fitapp01.ui.WorkoutScreen.WorkoutViewModel
 
 
+/**
+ * Provides view models for the Fitness Application.
+ * The [Factory] object provides a ViewModelFactory for creating various view models.
+ */
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
@@ -23,33 +27,11 @@ object AppViewModelProvider {
         }
     }
 }
-//class WorkoutViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(WorkoutViewModel::class.java)) {
-//            return WorkoutViewModel(context) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel class")
-//    }
-//}
 
-
-//class TempWorkoutViewModelFactory(private val onFinish: () -> Unit) : ViewModelProvider.Factory {
-//    val BigFactory = viewModelFactory {
-////        initializer {
-//            //WorkoutViewModel(onFinish = onFinish)
-////        }
-//    }
-//}
-
-//class WorkoutViewModelFactory(private val onFinish: () -> Unit) : ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(WorkoutViewModel::class.java)) {
-//            @Suppress("UNCHECKED_CAST")
-//            return WorkoutViewModel(onFinish) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel class")
-//    }
-//}
-
+/**
+ * Retrieves the Fitness Application instance from creation extras.
+ *
+ * @return The Fitness Application instance.
+ */
 fun CreationExtras.fitnessApplication(): FitnessApplication =
     (this[AndroidViewModelFactory.APPLICATION_KEY] as FitnessApplication)

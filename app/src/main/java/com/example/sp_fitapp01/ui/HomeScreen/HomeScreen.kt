@@ -41,33 +41,11 @@ import androidx.navigation.NavHostController
 import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.MainApp
 
-//object HomeDestination : NavigationDestination {
-//    override val route = "home"
-//    override val titleRes = R.string.app_name
-//}
-
-
-//@Composable
-//fun MainApp() {
-//    val navController = rememberNavController()
-//    NavHost(navController, startDestination = "main_screen") {
-//        composable("main_screen") { MainScreen(navController) }
-//        composable("exercise_screen") { ExerciseListScreen(navController) }
-//        composable("plan_screen") { PlansScreen(navController) }
-//        composable(
-//            "workout_screen/{planId}",
-//            arguments = listOf(navArgument("planId") { type = NavType.StringType })
-//        ) { backStackEntry ->
-//            val planId = backStackEntry.arguments?.getString("planId") ?: ""
-//            WorkoutScreen(navController = navController, planId = planId,
-//                onWorkoutComplete = { navController.navigate("finish_screen") })
-//        }
-//        composable("finish_screen") { FinishScreen(navController) }
-//        composable("stat_screen") { StatScreen(navController) }
-//    }
-//}
-
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+/**
+ * Composable function for displaying the main screen of the Fitness Application.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ */
 @Composable
 fun MainScreen(navController: NavHostController) {
     Scaffold(
@@ -91,6 +69,12 @@ fun MainScreen(navController: NavHostController) {
     }
 }
 
+/**
+ * Composable function for displaying a button in the footer section.
+ *
+ * @param text The text to display on the button.
+ * @param onClick The callback function to execute when the button is clicked.
+ */
 @Composable
 fun FooterButton(text: String, onClick: () -> Unit = {}) {
     Button(
@@ -104,6 +88,13 @@ fun FooterButton(text: String, onClick: () -> Unit = {}) {
     }
 }
 
+/**
+ * Composable function for displaying the top bar of the main screen.
+ *
+ * @param name The name to display on the top bar.
+ * @param motto The motto to display on the top bar.
+ * @param desc The description to display on the top bar.
+ */
 @Composable
 fun TopBarMain(name: String, motto:String, desc: String) {
     Box(
@@ -139,6 +130,9 @@ fun TopBarMain(name: String, motto:String, desc: String) {
     }
 }
 
+/**
+ * Composable function for displaying the logo on the main screen.
+ */
 @Composable
 fun MainLogo() {
         Image(
@@ -151,9 +145,13 @@ fun MainLogo() {
         )
 }
 
+/**
+ * Composable function for displaying the main buttons on the main screen.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ */
 @Composable
 fun MainButtons(navController: NavHostController) {
-            // Workout Button
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = { navController.navigate("plan_screen") },
@@ -167,7 +165,6 @@ fun MainButtons(navController: NavHostController) {
             )
         }
 
-        // Footer Buttons
         Spacer(modifier = Modifier.height(32.dp))
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -179,6 +176,12 @@ fun MainButtons(navController: NavHostController) {
         }
 }
 
+/**
+ * Composable function for displaying the top bar with name on various screens.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ * @param name The name to display on the top bar.
+ */
 @Composable
 fun TopBarName(navController: NavHostController, name: String) {
     Box(
@@ -188,7 +191,6 @@ fun TopBarName(navController: NavHostController, name: String) {
             .background(Color(0xFF8EBDEF))
             .padding(24.dp)
     ) {
-        // Header Section
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
@@ -212,6 +214,9 @@ fun TopBarName(navController: NavHostController, name: String) {
     }
 }
 
+/**
+ * Composable function for displaying the top bar icon.
+ */
 @Composable
 fun TopBarIcon() {
     Box(
@@ -233,7 +238,9 @@ fun TopBarIcon() {
     }
 }
 
-
+/**
+ * Preview function for displaying the main screen.
+ */
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {

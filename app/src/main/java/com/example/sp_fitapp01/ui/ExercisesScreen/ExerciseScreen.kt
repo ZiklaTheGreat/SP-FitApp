@@ -28,22 +28,12 @@ import androidx.navigation.NavHostController
 import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
-//var defExercises = listOf(
-//Exercise(R.drawable.push_up, R.raw.push_up, "Push up", "A push-up is a common strength training exercise..."),
-//Exercise(R.drawable.squat, R.raw.squat, "Squat", "A squat is a strength exercise..."),
-//Exercise(R.drawable.sit_up, R.raw.sit_up, "Sit-up", "A sit-up is an abdominal endurance training..."),
-//Exercise(R.drawable.dip, R.raw.dip, "Dip", "A dip is an upper-body strength exercise..."),
-//Exercise(R.drawable.jumping_jack, R.raw.jumping_jack, "Jumping jack", "A jumping jack, also known as a star jump..."),
-//Exercise(R.drawable.stretch, R.raw.stretch, "Stretch", "Stretching is a form of physical exercise...")
-//)
-
-
-
-//object HomeDestination : NavigationDestination {
-//    override val route = "exercises"
-//    override val titleRes = R.string.app_name
-//}
-
+/**
+ * Composable function for displaying a list of exercises.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ * @param exercises The list of exercises to display.
+ */
 @Composable
 fun ExerciseListScreen(navController: NavHostController, exercises: List<Exercise> = defExercises()) {
     Scaffold(
@@ -51,12 +41,11 @@ fun ExerciseListScreen(navController: NavHostController, exercises: List<Exercis
             TopBarName(navController = navController, name = "Exercises")
         }
     ) { innerPadding ->
-        // Exercise List
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(16.dp) // Additional padding for inner content
+                .padding(16.dp)
         ) {
             items(exercises) { exercise ->
                 ExerciseItem(exercise = exercise, onClick = { navController.navigate("exercise_detail_screen/${exercise.name}") } )
@@ -66,40 +55,12 @@ fun ExerciseListScreen(navController: NavHostController, exercises: List<Exercis
     }
 }
 
-//@Composable
-//fun ExerciseListHeader(navController: NavHostController) {
-//    Box(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
-//            .padding(24.dp)
-//    ) {
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            verticalAlignment = Alignment.CenterVertically
-//        ) {
-//            Icon(
-//                imageVector = Icons.Default.ArrowBack,
-//                contentDescription = "Back",
-//                modifier = Modifier
-//                    .size(24.dp)
-//                    .clickable { navController.popBackStack() }
-//            )
-//            Spacer(modifier = Modifier.weight(0.8f))
-//            Box(modifier = Modifier) {
-//                Text(
-//                    text = "Exercises",
-//                    fontSize = 30.sp,
-//                    fontWeight = FontWeight.Bold,
-//                    color = Color.Black,
-//                    textDecoration = TextDecoration.Underline
-//                )
-//            }
-//            Spacer(modifier = Modifier.weight(1f))
-//        }
-//    }
-//}
-
+/**
+ * Composable function for displaying an item in the exercise list.
+ *
+ * @param exercise The exercise to display.
+ * @param onClick Callback function invoked when the item is clicked.
+ */
 @Composable
 fun ExerciseItem(exercise: Exercise, onClick: (Exercise) -> Unit) {
     Row(
@@ -126,26 +87,3 @@ fun ExerciseItem(exercise: Exercise, onClick: (Exercise) -> Unit) {
     }
 }
 
-
-
-
-fun defExercises(): List<Exercise> {
-    return listOf(
-        Exercise(R.drawable.push_up, R.raw.push_up, "Push up", "A push-up is a common strength training exercise..."),
-        Exercise(R.drawable.squat, R.raw.squat, "Squat", "A squat is a strength exercise..."),
-        Exercise(R.drawable.sit_up, R.raw.sit_up, "Sit-up", "A sit-up is an abdominal endurance training..."),
-        Exercise(R.drawable.dip, R.raw.dip, "Dip", "A dip is an upper-body strength exercise..."),
-        Exercise(R.drawable.jumping_jack, R.raw.jumping_jack, "Jumping jack", "A jumping jack, also known as a star jump..."),
-        Exercise(R.drawable.stretch, R.raw.stretch, "Stretch", "Stretching is a form of physical exercise...")
-    )
-}
-
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ExerciseScreenPreview() {
-//    //ExerciseListScreen(navController = rememberNavController())
-//    ExerciseDetailScreen(exercise = Exercise(R.drawable.squat, R.raw.squat, "Squat", "A squat is a strength exercise...")) {
-//
-//    }
-//}

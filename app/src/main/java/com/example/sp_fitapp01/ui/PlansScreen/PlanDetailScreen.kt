@@ -23,10 +23,17 @@ import androidx.navigation.NavHostController
 import com.example.sp_fitapp01.ui.ExercisesScreen.ExerciseItem
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
+/**
+ * Composable function for displaying the details of a workout plan.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ * @param planName The name of the workout plan.
+ */
 @Composable
 fun PlanDetailScreen(navController: NavHostController, planName: String) {
-    //var selectedExercise by remember { mutableStateOf<Exercise?>(null) }
+
     val plan = dummyPlans().firstOrNull { it.name == planName }
+
     Scaffold(
         topBar = {
             TopBarName(navController = navController, name = "Plan Detail")
@@ -37,78 +44,63 @@ fun PlanDetailScreen(navController: NavHostController, planName: String) {
                 .fillMaxSize()
                 .padding(innerPadding)
                 .background(Color.White)
-                .padding(horizontal = 16.dp) // Add any additional padding you need
+                .padding(horizontal = 16.dp)
         ) {
             item {
-                // Plan Name
-                Text(
-                    text = planName,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black,
-                    modifier = Modifier.padding(14.dp)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
+                PlanName(planName = planName)
             }
 
             if (plan != null) {
                 items(plan.exercises) { exercise ->
-                    //ExerciseItem(exercise = exercise, onClick = { onExerciseClick(exercise) })
                     ExerciseItem(exercise = exercise, onClick = { navController.navigate("exercise_detail_screen/${exercise.name}") })
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
 
             item {
-                // Center the button horizontally
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Button(
-                        onClick = {
-                            navController.navigate("workout_screen/$planName")
-                        }
-                    ) {
-                        Text(text = "Start Workout")
-                    }
-                }
+                WorkoutButton(navController = navController, planName = planName)
             }
         }
     }
 }
 
-//@Composable
-//fun PlanDetailHeader(onBack: () -> Unit) {
-//    Box(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
-//            .padding(24.dp)
-//    ) {
-//        // Header Section
-//        Row(
-//            verticalAlignment = Alignment.CenterVertically,
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Icon(
-//                imageVector = Icons.Default.ArrowBack,
-//                contentDescription = "Back",
-//                modifier = Modifier
-//                    .size(24.dp)
-//                    .clickable { onBack() }
-//            )
-//            Spacer(modifier = Modifier.weight(0.8f))
-//            Text(
-//                text = "Plan Detail",
-//                fontSize = 24.sp,
-//                fontWeight = FontWeight.Bold,
-//                color = Color.Black,
-//            )
-//            Spacer(modifier = Modifier.weight(1f))
-//        }
-//    }
-//}
+/**
+ * Composable function for displaying the name of a workout plan.
+ *
+ * @param planName The name of the workout plan.
+ */
+@Composable
+fun PlanName(planName: String) {
+    Text(
+        text = planName,
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Black,
+        modifier = Modifier.padding(14.dp)
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+}
 
+/**
+ * Composable function for displaying the "Start Workout" button.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ * @param planName The name of the workout plan.
+ */
+@Composable
+fun WorkoutButton(navController: NavHostController, planName: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Button(
+            onClick = {
+                navController.navigate("workout_screen/$planName")
+            }
+        ) {
+            Text(text = "Start Workout")
+        }
+    }
+}

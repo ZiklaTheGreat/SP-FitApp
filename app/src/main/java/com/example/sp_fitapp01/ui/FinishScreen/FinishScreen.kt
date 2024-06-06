@@ -37,6 +37,12 @@ import com.example.sp_fitapp01.ui.AppViewModelProvider
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
 import kotlinx.coroutines.launch
 
+/**
+ * Composable function for displaying the finish screen of the Fitness Application.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ * @param viewModel The view model for the finish screen.
+ */
 @Composable
 fun FinishScreen(
     navController: NavHostController,
@@ -59,6 +65,12 @@ fun FinishScreen(
     }
 }
 
+/**
+ * Composable function for displaying the body section of the finish screen.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ * @param viewModel The view model for the finish screen.
+ */
 @Composable
 fun FinishBody(navController: NavHostController, viewModel: FinishScreenViewModel) {
     val feelings = (1..5).toList()
@@ -138,6 +150,9 @@ fun FinishBody(navController: NavHostController, viewModel: FinishScreenViewMode
 }
 
 
+/**
+ * Preview function for displaying the finish screen.
+ */
 @Preview
 @Composable
 fun FinishScreenPreview() {

@@ -21,15 +21,25 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import coil.compose.AsyncImagePainter.State.Empty.painter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
 import coil.decode.*
+import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
-
+/**
+ * Composable function for displaying detailed information about a specific exercise.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ * @param exerciseName The name of the exercise to display details for.
+ */
 @Composable
-fun ExerciseDetailScreen(exerciseName: String, onBack: () -> Unit) {
+fun ExerciseDetailScreen(navController: NavHostController, exerciseName: String) {
     val context = LocalContext.current
     val exercise = defExercises().firstOrNull { it.name == exerciseName }
     val painter = rememberAsyncImagePainter(
@@ -42,83 +52,56 @@ fun ExerciseDetailScreen(exerciseName: String, onBack: () -> Unit) {
 
     Scaffold(
         topBar = {
-            ExerciseDetailHeader(onBack = onBack)
+            TopBarName(navController = navController, name = exerciseName)
         }
     ) { innerPadding ->
-        // Scrollable content
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .background(Color.White)
-                .verticalScroll(rememberScrollState()) // Enables scrolling
+                .verticalScroll(rememberScrollState())
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-
-            // Exercise GIF
-            Image(
-                painter = painter,
-                contentDescription = exerciseName,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f) // Keeps the aspect ratio of the image
-                    .clip(RoundedCornerShape(8.dp))
-                    .padding(horizontal = 16.dp),
-                contentScale = ContentScale.Fit
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Exercise Description
-            Text(
-                text = exerciseName,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
             if (exercise != null) {
-                Text(
-                    text = exercise.description,
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
+                ExerciseBody(painter = painter, exerciseName = exerciseName, exercise = exercise)
             }
         }
     }
 }
 
+/**
+ * Composable function for displaying the body section of the exercise detail screen.
+ *
+ * @param painter Painter for loading exercise GIF.
+ * @param exerciseName The name of the exercise.
+ * @param exercise The exercise object containing details.
+ */
 @Composable
-fun ExerciseDetailHeader(onBack: () -> Unit) {
-    Box(
+fun ExerciseBody(painter: Painter, exerciseName: String, exercise: Exercise) {
+    Image(
+        painter = painter,
+        contentDescription = exerciseName,
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
-            .background(Color(0xFF8EBDEF))
-            .padding(24.dp)
-    ) {
-        // Header Section
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                modifier = Modifier
-                    .size(24.dp)
-                    .clickable { onBack() }
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "Exercise Detail",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-            Spacer(modifier = Modifier.weight(1f))
-        }
-    }
+            .aspectRatio(1f)
+            .clip(RoundedCornerShape(8.dp))
+            .padding(horizontal = 16.dp),
+        contentScale = ContentScale.Fit
+    )
+    Spacer(modifier = Modifier.height(16.dp))
+    Text(
+        text = exerciseName,
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Black,
+        modifier = Modifier.padding(horizontal = 16.dp)
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(
+        text = exercise.description,
+        fontSize = 16.sp,
+        color = Color.Black,
+        modifier = Modifier.padding(horizontal = 16.dp)
+    )
 }

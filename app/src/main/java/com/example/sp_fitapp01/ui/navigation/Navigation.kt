@@ -16,6 +16,12 @@ import com.example.sp_fitapp01.ui.PlansScreen.PlansScreen
 import com.example.sp_fitapp01.ui.StatScreen.StatScreen
 import com.example.sp_fitapp01.ui.WorkoutScreen.WorkoutScreen
 
+/**
+ * Composable function for setting up navigation within the FitApp.
+ *
+ * @param navController The navigation controller for managing navigation within the app.
+ * @param modifier The modifier to apply to the NavHost.
+ */
 @Composable
 fun FitAppNavigation(
     navController: NavHostController,
@@ -33,7 +39,7 @@ fun FitAppNavigation(
             val exerciseId = backStackEntry.arguments?.getString("exerciseID") ?: ""
             ExerciseDetailScreen(
                 exerciseName = exerciseId,
-                onBack = { navController.popBackStack() })
+                navController = navController)
         }
         composable("plan_screen") { PlansScreen(navController) }
         composable(

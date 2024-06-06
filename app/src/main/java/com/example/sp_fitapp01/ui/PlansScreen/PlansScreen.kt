@@ -30,9 +30,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
+import com.example.sp_fitapp01.ui.ExercisesScreen.defExercises
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
 
+/**
+ * Composable function for displaying the list of workout plans.
+ *
+ * @param navController The navigation controller for navigating between screens.
+ */
 @Composable
 fun PlansScreen(navController: NavHostController) {
     val plans = remember { dummyPlans() }
@@ -56,6 +62,12 @@ fun PlansScreen(navController: NavHostController) {
     }
 }
 
+/**
+ * Composable function for displaying an item in the list of workout plans.
+ *
+ * @param plan The workout plan to display.
+ * @param onClick The callback function to execute when the plan item is clicked.
+ */
 @Composable
 fun PlanItem(plan: Plan, onClick: (Plan) -> Unit) {
     Row(
@@ -82,30 +94,4 @@ fun PlanItem(plan: Plan, onClick: (Plan) -> Unit) {
     }
 }
 
-// Dummy data for plans
-data class Plan(val name: String, val imageResId: Int, val exercises: List<Exercise>)
 
-fun dummyPlans(): List<Plan> {
-    return listOf(
-        Plan("Horné telo", R.drawable.push_up, listOf(
-            Exercise(R.drawable.push_up, R.raw.push_up, "Push up", "A push-up is a common strength training exercise..."),
-            Exercise(R.drawable.squat, R.raw.squat, "Squat", "A squat is a strength exercise...")
-        )),
-        Plan("Dolné telo", R.drawable.push_up, listOf(
-            Exercise(R.drawable.push_up, R.raw.push_up, "Push up", "A push-up is a common strength training exercise..."),
-            Exercise(R.drawable.squat, R.raw.squat, "Squat", "A squat is a strength exercise...")
-        )),
-        // Add more plans as needed
-    )
-}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun PlansScreenPreview() {
-//    //PlansScreen(navController = rememberNavController())
-//    PlanDetailScreen(plan = Plan("Horné telo", R.drawable.push_up, listOf(
-//        Exercise(R.drawable.push_up, R.raw.push_up, "Push up", "A push-up is a common strength training exercise..."),
-//        Exercise(R.drawable.squat, R.raw.squat, "Squat", "A squat is a strength exercise...")
-//    )), onBack = {  },
-//        navController = rememberNavController())
-//}

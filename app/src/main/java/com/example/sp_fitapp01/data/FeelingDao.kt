@@ -8,22 +8,13 @@ import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Data Access Object (DAO) for accessing feelings data from the database.
+ */
 @Dao
 interface FeelingDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFeeling(feeling: Feeling)
-
-    @Update
-    suspend fun updateFeeling(feeling: Feeling)
-
-    @Delete
-    suspend fun deleteFeeling(feeling: Feeling)
-
-    @Query("SELECT * from feelings WHERE value = :value")
-    fun getFeeling(value: Int): Flow<Feeling>
-
-    @Query("SELECT * from feelings ORDER BY name ASC")
-    fun getAllFeelings(): Flow<List<Feeling>>
 
     @Query("SELECT * from feelings WHERE value = :value")
     fun getFeelingsByValue(value: Int): Flow<List<Feeling>>
