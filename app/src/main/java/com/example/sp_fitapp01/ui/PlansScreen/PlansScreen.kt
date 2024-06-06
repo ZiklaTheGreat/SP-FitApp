@@ -28,9 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.sp_fitapp01.R
-import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
-import com.example.sp_fitapp01.ui.ExercisesScreen.defExercises
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
 

@@ -1,7 +1,5 @@
 package com.example.sp_fitapp01.ui.WorkoutScreen
 
-import android.content.Context
-import android.media.MediaPlayer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -43,7 +40,6 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
-import com.example.sp_fitapp01.ui.FinishScreen.FinishScreenViewModel
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
 import com.example.sp_fitapp01.ui.PlansScreen.dummyPlans
 

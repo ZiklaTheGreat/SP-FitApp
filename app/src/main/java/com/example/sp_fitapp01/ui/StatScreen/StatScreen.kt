@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import co.yml.charts.common.model.PlotType
@@ -37,9 +36,6 @@ import co.yml.charts.ui.piechart.charts.DonutPieChart
 import co.yml.charts.ui.piechart.models.PieChartConfig
 import co.yml.charts.ui.piechart.models.PieChartData
 import com.example.sp_fitapp01.ui.AppViewModelProvider
-import com.example.sp_fitapp01.ui.FinishScreen.FinishBody
-import com.example.sp_fitapp01.ui.FinishScreen.FinishScreenViewModel
-import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
 /**
