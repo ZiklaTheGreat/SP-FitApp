@@ -206,7 +206,8 @@ fun TopBarName(navController: NavHostController, name: String) {
                 text = name,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = Color.Black,
+                textDecoration = TextDecoration.Underline
             )
             Spacer(modifier = Modifier.weight(1f))
         }

@@ -1,5 +1,6 @@
 package com.example.sp_fitapp01.ui.StatScreen
 
+import android.graphics.Typeface
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -101,11 +102,16 @@ fun PieChart(s1: Float = 0f, s2: Float = 0f, s3: Float = 0f, s4: Float = 0f, s5:
         plotType = PlotType.Donut
     )
     val donutChartConfig = PieChartConfig(
-        strokeWidth = 80f,
+        labelTypeface = Typeface.DEFAULT_BOLD,
+        strokeWidth = 85f,
         activeSliceAlpha = .9f,
         isAnimationEnable = true,
         showSliceLabels = true,
-        labelVisible = true
+        labelVisible = true,
+        labelColor = Color.Black,
+        labelFontSize = 28.sp,
+        labelColorType = PieChartConfig.LabelColorType.SLICE_COLOR,
+        labelType = PieChartConfig.LabelType.PERCENTAGE
     )
 
     Column(
@@ -120,6 +126,7 @@ fun PieChart(s1: Float = 0f, s2: Float = 0f, s3: Float = 0f, s4: Float = 0f, s5:
             donutChartConfig
         )
         Spacer(modifier = Modifier.height(16.dp))
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()

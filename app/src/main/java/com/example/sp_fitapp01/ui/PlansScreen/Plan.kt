@@ -2,6 +2,7 @@ package com.example.sp_fitapp01.ui.PlansScreen
 
 import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
+import com.example.sp_fitapp01.ui.ExercisesScreen.defExercises
 
 /**
  * Data class representing a workout plan.
@@ -21,14 +22,36 @@ data class Plan(val name: String,
  * @return A list of dummy workout plans.
  */
 fun dummyPlans(): List<Plan> {
+    val exercises = defExercises()
+    val findExerciseByName: (String) -> Exercise? = { name -> exercises.find { it.name == name } }
+
     return listOf(
-        Plan("Horné telo", R.drawable.push_up, listOf(
-            Exercise(R.drawable.push_up, R.raw.push_up, "Push up", "A push-up is a common strength training exercise..."),
-            Exercise(R.drawable.squat, R.raw.squat, "Squat", "A squat is a strength exercise...")
-        )),
-        Plan("Dolné telo", R.drawable.push_up, listOf(
-            Exercise(R.drawable.push_up, R.raw.push_up, "Push up", "A push-up is a common strength training exercise..."),
-            Exercise(R.drawable.squat, R.raw.squat, "Squat", "A squat is a strength exercise...")
-        )),
+        Plan(
+            "Horné telo",
+            R.drawable.upper_body,
+            listOfNotNull(
+                findExerciseByName("Push up"),
+                findExerciseByName("Dip"),
+                findExerciseByName("Stretch")
+            )
+        ),
+        Plan(
+            "Dolné telo",
+            R.drawable.lower_body,
+            listOfNotNull(
+                findExerciseByName("Jumping jack"),
+                findExerciseByName("Squat"),
+                findExerciseByName("Stretch")
+            )
+        ),
+        Plan(
+            "Jadro",
+            R.drawable.core,
+            listOfNotNull(
+                findExerciseByName("Jumping jack"),
+                findExerciseByName("Sit-up"),
+                findExerciseByName("Stretch")
+            )
+        )
     )
 }
