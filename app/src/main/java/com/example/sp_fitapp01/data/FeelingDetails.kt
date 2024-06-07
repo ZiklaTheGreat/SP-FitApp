@@ -1,4 +1,4 @@
-package com.example.sp_fitapp01.ui.FinishScreen
+package com.example.sp_fitapp01.data
 
 /**
  * Represents details about a feeling.

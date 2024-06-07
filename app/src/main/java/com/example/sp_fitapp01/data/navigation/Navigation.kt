@@ -1,4 +1,4 @@
-package com.example.sp_fitapp01.ui.navigation
+package com.example.sp_fitapp01.data.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

@@ -1,11 +1,10 @@
-package com.example.sp_fitapp01.data
+package com.example.sp_fitapp01.data.databse
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
+import com.example.sp_fitapp01.data.Feeling
 import kotlinx.coroutines.flow.Flow
 
 /**

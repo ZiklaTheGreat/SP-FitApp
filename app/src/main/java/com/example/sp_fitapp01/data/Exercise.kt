@@ -1,4 +1,4 @@
-package com.example.sp_fitapp01.ui.ExercisesScreen
+package com.example.sp_fitapp01.data
 
 import com.example.sp_fitapp01.R
 
@@ -22,7 +22,7 @@ data class Exercise(
  *
  * @return A list of Exercise objects representing default exercises.
  */
-fun defExercises(): List<Exercise> {
+fun dummyExercises(): List<Exercise> {
     return listOf(
         Exercise(R.drawable.push_up, R.raw.push_up, "Push up", "A push-up is a common strength training exercise..."),
         Exercise(R.drawable.squat, R.raw.squat, "Squat", "A squat is a strength exercise..."),

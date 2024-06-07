@@ -1,5 +1,6 @@
-package com.example.sp_fitapp01.data
+package com.example.sp_fitapp01.data.databse
 
+import com.example.sp_fitapp01.data.Feeling
 import kotlinx.coroutines.flow.Flow
 
 /**

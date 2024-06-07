@@ -1,8 +1,6 @@
-package com.example.sp_fitapp01.ui.PlansScreen
+package com.example.sp_fitapp01.data
 
 import com.example.sp_fitapp01.R
-import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
-import com.example.sp_fitapp01.ui.ExercisesScreen.defExercises
 
 /**
  * Data class representing a workout plan.
@@ -22,7 +20,7 @@ data class Plan(val name: String,
  * @return A list of dummy workout plans.
  */
 fun dummyPlans(): List<Plan> {
-    val exercises = defExercises()
+    val exercises = dummyExercises()
     val findExerciseByName: (String) -> Exercise? = { name -> exercises.find { it.name == name } }
 
     return listOf(

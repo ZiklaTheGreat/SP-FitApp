@@ -2,7 +2,8 @@ package com.example.sp_fitapp01.ui.FinishScreen
 
 import androidx.lifecycle.ViewModel
 import com.example.sp_fitapp01.data.Feeling
-import com.example.sp_fitapp01.data.FeelingRepository
+import com.example.sp_fitapp01.data.FeelingDetails
+import com.example.sp_fitapp01.data.databse.FeelingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

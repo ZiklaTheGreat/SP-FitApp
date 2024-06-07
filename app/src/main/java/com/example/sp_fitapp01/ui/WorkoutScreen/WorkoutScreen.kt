@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,9 +41,9 @@ import coil.decode.GifDecoder
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.sp_fitapp01.R
-import com.example.sp_fitapp01.ui.ExercisesScreen.Exercise
+import com.example.sp_fitapp01.data.Exercise
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
-import com.example.sp_fitapp01.ui.PlansScreen.dummyPlans
+import com.example.sp_fitapp01.data.dummyPlans
 
 
 /**
@@ -64,9 +65,7 @@ fun WorkoutScreen(
             WorkoutViewModel(context)
         }
     })
-    BackHandler {
-        // Nevykonáva žiadnu akciu, čím efektívne blokuje tlačidlo "späť"
-    }
+    BackHandler {}
     val plan = dummyPlans().firstOrNull { it.name == planId }
 
     if (plan == null) {
@@ -123,7 +122,7 @@ fun WorkoutScreen(
 fun WorkoutBody(isResting: Boolean, exercise: Exercise, switchToNextPhase: () -> Unit, timeLeft: Int) {
     Spacer(modifier = Modifier.height(16.dp))
     Text(
-        text = if (isResting) "Rest" else exercise.name,
+        text = if (isResting) stringResource(id = R.string.rest) else exercise.name,
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         color = Color.Black
@@ -166,7 +165,7 @@ fun WorkoutBody(isResting: Boolean, exercise: Exercise, switchToNextPhase: () ->
         },
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text(text = "Skip")
+        Text(text = stringResource(id = R.string.skip))
     }
 }
 

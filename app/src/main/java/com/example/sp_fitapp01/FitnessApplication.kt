@@ -1,8 +1,8 @@
 package com.example.sp_fitapp01
 
 import android.app.Application
-import com.example.sp_fitapp01.data.AppContainer
-import com.example.sp_fitapp01.data.AppDataContainer
+import com.example.sp_fitapp01.data.databse.AppContainer
+import com.example.sp_fitapp01.data.databse.AppDataContainer
 
 /**
  * Application class for the Fitness Application.

@@ -25,6 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.sp_fitapp01.data.Exercise
+import com.example.sp_fitapp01.data.dummyExercises
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
 /**
@@ -34,7 +36,7 @@ import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
  * @param exercises The list of exercises to display.
  */
 @Composable
-fun ExerciseListScreen(navController: NavHostController, exercises: List<Exercise> = defExercises()) {
+fun ExerciseListScreen(navController: NavHostController, exercises: List<Exercise> = dummyExercises()) {
     Scaffold(
         topBar = {
             TopBarName(navController = navController, name = "Exercises")

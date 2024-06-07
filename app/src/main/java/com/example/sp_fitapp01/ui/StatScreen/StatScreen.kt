@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,6 +37,7 @@ import co.yml.charts.common.model.PlotType
 import co.yml.charts.ui.piechart.charts.DonutPieChart
 import co.yml.charts.ui.piechart.models.PieChartConfig
 import co.yml.charts.ui.piechart.models.PieChartData
+import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.AppViewModelProvider
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
@@ -54,7 +56,7 @@ fun StatScreen(
     val totalWorkouts by viewModel.totalWorkouts.collectAsState()
 
     Scaffold(
-        topBar = { TopBarName(navController = navController, name = "Statistics") }
+        topBar = { TopBarName(navController = navController, name = stringResource(id = R.string.stats)) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -95,11 +97,11 @@ fun StatScreen(
 fun PieChart(s1: Float = 0f, s2: Float = 0f, s3: Float = 0f, s4: Float = 0f, s5: Float = 0f) {
     val donutChartData = PieChartData(
         slices = listOf(
-            PieChartData.Slice("Exhausted", s1, Color(0xFFF53844)),
-            PieChartData.Slice("Tired", s2, Color(0xFFEC9F05)),
-            PieChartData.Slice("Satisfied", s3, Color(0xFF20BF55)),
-            PieChartData.Slice("Energized", s4, Color(0xFF8A2BE2)),
-            PieChartData.Slice("Excellent", s5, Color(0xF00538ff))
+            PieChartData.Slice(stringResource(id = R.string.exhausted), s1, Color(0xFFF53844)),
+            PieChartData.Slice(stringResource(id = R.string.tired), s2, Color(0xFFEC9F05)),
+            PieChartData.Slice(stringResource(id = R.string.satisfied), s3, Color(0xFF20BF55)),
+            PieChartData.Slice(stringResource(id = R.string.energized), s4, Color(0xFF8A2BE2)),
+            PieChartData.Slice(stringResource(id = R.string.excellent), s5, Color(0xF00538ff))
         ),
         plotType = PlotType.Donut
     )
@@ -167,7 +169,7 @@ fun TotalWorkouts(totalWorkouts: Int) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Total Workouts",
+            text = stringResource(id = R.string.total_workouts),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black
@@ -192,7 +194,7 @@ fun NoDataFound() {
         modifier = Modifier.fillMaxSize()
     ) {
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "No data found", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text(text = stringResource(id = R.string.no_data), fontSize = 24.sp, fontWeight = FontWeight.Bold)
     }
 }
 

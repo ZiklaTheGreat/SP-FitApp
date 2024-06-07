@@ -29,6 +29,8 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.GifDecoder
 import coil.request.ImageRequest
 import coil.size.Size
+import com.example.sp_fitapp01.data.Exercise
+import com.example.sp_fitapp01.data.dummyExercises
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
 /**
@@ -40,7 +42,7 @@ import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 @Composable
 fun ExerciseDetailScreen(navController: NavHostController, exerciseName: String) {
     val context = LocalContext.current
-    val exercise = defExercises().firstOrNull { it.name == exerciseName }
+    val exercise = dummyExercises().firstOrNull { it.name == exerciseName }
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
             .data(exercise?.gifResourceId)

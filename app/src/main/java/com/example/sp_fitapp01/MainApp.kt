@@ -1,8 +1,8 @@
-package com.example.sp_fitapp01.ui
+package com.example.sp_fitapp01
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
-import com.example.sp_fitapp01.ui.navigation.FitAppNavigation
+import com.example.sp_fitapp01.data.navigation.FitAppNavigation
 
 /**
  * Main UI entry point for the Fitness Application.

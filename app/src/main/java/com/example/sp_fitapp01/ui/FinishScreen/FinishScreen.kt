@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.AppViewModelProvider
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarIcon
 import kotlinx.coroutines.launch
@@ -49,9 +51,7 @@ fun FinishScreen(
     navController: NavHostController,
     viewModel: FinishScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    BackHandler {
-        // Nevykonáva žiadnu akciu, čím efektívne blokuje tlačidlo "späť"
-    }
+    BackHandler {}
     Scaffold(
         topBar = { TopBarIcon() }
     ) { innerPadding ->
@@ -78,7 +78,12 @@ fun FinishScreen(
 @Composable
 fun FinishBody(navController: NavHostController, viewModel: FinishScreenViewModel) {
     val feelings = (1..5).toList()
-    val descriptions = listOf("Exhausted", "Tired", "Satisfied", "Energized", "Excellent")
+    val descriptions = listOf(
+        stringResource(id = R.string.exhausted),
+        stringResource(id = R.string.tired),
+        stringResource(id = R.string.satisfied),
+        stringResource(id = R.string.energized),
+        stringResource(id = R.string.excellent))
     val coroutineScope = rememberCoroutineScope()
     val selectedFeel by viewModel.selectedFeeling.collectAsState()
     Column(
@@ -86,21 +91,21 @@ fun FinishBody(navController: NavHostController, viewModel: FinishScreenViewMode
     ) {
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "Done!",
+            text = stringResource(id = R.string.done),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "Great Job",
+            text = stringResource(id = R.string.great_job),
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "How do you feel?",
+            text = stringResource(id = R.string.feel),
             fontSize = 18.sp,
             color = Color.Black
         )
@@ -149,7 +154,7 @@ fun FinishBody(navController: NavHostController, viewModel: FinishScreenViewMode
             .fillMaxWidth()
             .height(48.dp)
     ) {
-        Text(text = "Finish", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text(text = stringResource(id = R.string.finish), fontSize = 18.sp, fontWeight = FontWeight.Bold)
     }
 }
 

@@ -16,10 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.sp_fitapp01.R
+import com.example.sp_fitapp01.data.dummyPlans
 import com.example.sp_fitapp01.ui.ExercisesScreen.ExerciseItem
 import com.example.sp_fitapp01.ui.HomeScreen.TopBarName
 
@@ -36,7 +39,7 @@ fun PlanDetailScreen(navController: NavHostController, planName: String) {
 
     Scaffold(
         topBar = {
-            TopBarName(navController = navController, name = "Plan Detail")
+            TopBarName(navController = navController, name = stringResource(id = R.string.plan_detail))
         }
     ) { innerPadding ->
         LazyColumn(
@@ -100,7 +103,7 @@ fun WorkoutButton(navController: NavHostController, planName: String) {
                 navController.navigate("workout_screen/$planName")
             }
         ) {
-            Text(text = "Start Workout")
+            Text(text = stringResource(id = R.string.start_workout))
         }
     }
 }

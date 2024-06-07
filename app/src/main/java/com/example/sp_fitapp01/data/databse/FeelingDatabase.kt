@@ -1,9 +1,10 @@
-package com.example.sp_fitapp01.data
+package com.example.sp_fitapp01.data.databse
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.sp_fitapp01.data.Feeling
 
 /**
  * Room database for storing feelings data.

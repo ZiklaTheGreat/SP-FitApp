@@ -2,7 +2,7 @@ package com.example.sp_fitapp01.ui.StatScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sp_fitapp01.data.FeelingRepository
+import com.example.sp_fitapp01.data.databse.FeelingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

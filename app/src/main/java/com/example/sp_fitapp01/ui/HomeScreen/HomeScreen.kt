@@ -32,6 +32,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.sp_fitapp01.R
-import com.example.sp_fitapp01.ui.MainApp
+import com.example.sp_fitapp01.MainApp
 import kotlin.system.exitProcess
 
 /**
@@ -54,16 +55,15 @@ fun MainScreen(navController: NavHostController) {
     }
     Scaffold(
         topBar = {
-            TopBarMain(name = "FitApp", motto = "your fitness journey, today", desc = "MENU")
+            TopBarMain(name = stringResource(id = R.string.app_name), motto = stringResource(id = R.string.motto), desc = stringResource(id = R.string.menu))
         }
     ) { innerPadding ->
-        // Use Scrollable Column to enable scrolling
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)  // This will apply the Scaffold's padding
-                .verticalScroll(rememberScrollState()) // Enables scrolling
-                .padding(horizontal = 16.dp),  // Add any additional padding you need
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(32.dp))
@@ -175,7 +175,6 @@ fun MainButtons(navController: NavHostController) {
             modifier = Modifier.fillMaxWidth()
         ) {
             FooterButton(text = "Exercises") { navController.navigate("exercise_screen") }
-            //FooterButton(text = "Plans") { navController.navigate("plan_screen") }
             FooterButton(text = "Stats") { navController.navigate("stat_screen") }
         }
 }
