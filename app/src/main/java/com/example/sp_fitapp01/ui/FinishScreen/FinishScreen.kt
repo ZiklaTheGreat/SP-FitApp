@@ -1,5 +1,6 @@
 package com.example.sp_fitapp01.ui.FinishScreen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -48,6 +49,9 @@ fun FinishScreen(
     navController: NavHostController,
     viewModel: FinishScreenViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    BackHandler {
+        // Nevykonáva žiadnu akciu, čím efektívne blokuje tlačidlo "späť"
+    }
     Scaffold(
         topBar = { TopBarIcon() }
     ) { innerPadding ->

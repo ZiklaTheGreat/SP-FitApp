@@ -1,5 +1,6 @@
 package com.example.sp_fitapp01.ui.HomeScreen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.sp_fitapp01.R
 import com.example.sp_fitapp01.ui.MainApp
+import kotlin.system.exitProcess
 
 /**
  * Composable function for displaying the main screen of the Fitness Application.
@@ -47,6 +49,9 @@ import com.example.sp_fitapp01.ui.MainApp
  */
 @Composable
 fun MainScreen(navController: NavHostController) {
+    BackHandler {
+        exitProcess(0)
+    }
     Scaffold(
         topBar = {
             TopBarMain(name = "FitApp", motto = "your fitness journey, today", desc = "MENU")

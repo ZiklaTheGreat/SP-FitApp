@@ -51,6 +51,7 @@ fun StatScreen(
     viewModel: StatViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val feelings by viewModel.feelings.collectAsState()
+    val totalWorkouts by viewModel.totalWorkouts.collectAsState()
 
     Scaffold(
         topBar = { TopBarName(navController = navController, name = "Statistics") }
@@ -62,11 +63,11 @@ fun StatScreen(
                 .verticalScroll(rememberScrollState())
                 .background(Color.White),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.Top
         ) {
-            TotalWorkouts(viewModel)
+            TotalWorkouts(totalWorkouts)
             Spacer(modifier = Modifier.height(16.dp))
-            if (feelings.isNotEmpty()) {
+            if (totalWorkouts > 0) {
                 PieChart(
                     s1 = feelings.getOrElse(0) { 0f },
                     s2 = feelings.getOrElse(1) { 0f },
@@ -74,10 +75,13 @@ fun StatScreen(
                     s4 = feelings.getOrElse(3) { 0f },
                     s5 = feelings.getOrElse(4) { 0f }
                 )
+            } else {
+                NoDataFound()
             }
         }
     }
 }
+
 /**
  * Composable function for displaying a pie chart.
  *
@@ -96,8 +100,6 @@ fun PieChart(s1: Float = 0f, s2: Float = 0f, s3: Float = 0f, s4: Float = 0f, s5:
             PieChartData.Slice("Satisfied", s3, Color(0xFF20BF55)),
             PieChartData.Slice("Energized", s4, Color(0xFF8A2BE2)),
             PieChartData.Slice("Excellent", s5, Color(0xF00538ff))
-
-
         ),
         plotType = PlotType.Donut
     )
@@ -154,12 +156,10 @@ fun PieChart(s1: Float = 0f, s2: Float = 0f, s3: Float = 0f, s4: Float = 0f, s5:
 /**
  * Composable function for displaying total workouts.
  *
- * @param viewModel The view model responsible for providing data for total workouts.
+ * @param totalWorkouts Number of total workouts completed.
  */
 @Composable
-fun TotalWorkouts(viewModel: StatViewModel) {
-    val totalWorkouts by viewModel.totalWorkouts.collectAsState()
-
+fun TotalWorkouts(totalWorkouts: Int) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -179,6 +179,20 @@ fun TotalWorkouts(viewModel: StatViewModel) {
             fontWeight = FontWeight.Bold,
             color = Color.Black
         )
+    }
+}
+
+/**
+ * Composable function for displaying text no data found when no data found.
+ */
+@Composable
+fun NoDataFound() {
+    Box(
+        contentAlignment = Alignment.TopCenter,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = "No data found", fontSize = 24.sp, fontWeight = FontWeight.Bold)
     }
 }
 

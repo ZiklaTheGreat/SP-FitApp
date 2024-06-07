@@ -1,5 +1,6 @@
 package com.example.sp_fitapp01.ui.WorkoutScreen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -63,6 +64,9 @@ fun WorkoutScreen(
             WorkoutViewModel(context)
         }
     })
+    BackHandler {
+        // Nevykonáva žiadnu akciu, čím efektívne blokuje tlačidlo "späť"
+    }
     val plan = dummyPlans().firstOrNull { it.name == planId }
 
     if (plan == null) {
